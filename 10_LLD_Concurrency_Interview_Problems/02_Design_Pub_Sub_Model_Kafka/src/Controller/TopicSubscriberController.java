@@ -18,12 +18,11 @@ public class TopicSubscriberController implements Runnable {
         ISubscriber subscriber = topicSubscriber.getSubscriber();
         while (true) {
             Message messageToProcess = null;
-            // Synchronize on the topic so that wait/notify can be used.
-            synchronized (topic) {
+            synchronized (topicSubscriber) {
                 // Wait until there is a new message (offset is less than the number of messages)
                 while (topicSubscriber.getOffset().get() >= topic.getMessages().size()) {
                     try {
-                        topic.wait();
+                        topicSubscriber.wait();
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                         return;

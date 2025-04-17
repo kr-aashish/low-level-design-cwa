@@ -27,11 +27,8 @@ public class Topic {
         return topicId;
     }
 
-    // Synchronized so that add and wait/notify work properly.
     public synchronized void addMessage(Message message) {
         messages.add(message);
-        // Notify all waiting subscriber threads that a new message is available.
-        notifyAll();
     }
 
     public synchronized List<Message> getMessages() {

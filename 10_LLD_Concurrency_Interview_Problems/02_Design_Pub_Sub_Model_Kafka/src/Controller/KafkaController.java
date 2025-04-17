@@ -55,6 +55,13 @@ public class KafkaController {
             throw new IllegalArgumentException("Topic with id " + topicId + " does not exist");
         }
         topic.addMessage(message);
+        // wake up each subscriber on its own monitor
+        List<TopicSubscriber> subs = topicSubscribers.get(topicId);
+        for (TopicSubscriber topicSubscriber : subs) {
+            synchronized (topicSubscriber) {
+                topicSubscriber.notify();
+            }
+        }
         System.out.println("Message \"" + message.getMessage() + "\" published to topic: " + topic.getTopicName());
     }
 
