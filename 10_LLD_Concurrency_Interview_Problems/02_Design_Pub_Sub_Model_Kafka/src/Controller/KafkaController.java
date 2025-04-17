@@ -76,8 +76,8 @@ public class KafkaController {
             if (ts.getSubscriber().getId().equals(subscriber.getId())) {
                 ts.getOffset().set(newOffset);
                 // Notify in case the subscriber thread is waiting.
-                synchronized (ts.getTopic()) {
-                    ts.getTopic().notifyAll();
+                synchronized (ts) {
+                    ts.notify();
                 }
                 System.out.println("Offset for subscriber " + subscriber.getId() + " on topic " +
                         ts.getTopic().getTopicName() + " reset to " + newOffset);
