@@ -25,7 +25,7 @@ function generate_tree_recursive() {
         
         if [ -d "$item_path" ]; then
             # --- Handle Directories ---
-            echo "${prefix}+-- [D] ${item_name}" >> "$output_file"
+            echo "${prefix}+-- ${item_name}" >> "$output_file"
             # Print the vertical connector line for the contents of this new directory
             echo "${prefix}|   |" >> "$output_file"
             # Make a recursive call, passing the output file path along
@@ -33,7 +33,7 @@ function generate_tree_recursive() {
 
         elif [ -f "$item_path" ]; then
             # --- Handle Files ---
-            echo "${prefix}+-- [F] ${item_name}" >> "$output_file"
+            echo "${prefix}+-- ${item_name}" >> "$output_file"
             
             # Define the prefix for the file's content lines
             local content_prefix="${prefix}|   |"
